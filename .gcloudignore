@@ -1,0 +1,17 @@
+#!include:.gitignore
+
+terraform/
+
+.env
+
+.git
+
+docs/
+.util
+
+.DS_Store
+media/
+
+venv/
+htmlcov/
+.coverage/
