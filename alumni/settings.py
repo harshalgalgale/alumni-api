@@ -27,7 +27,7 @@ if not os.path.isfile(env_file):
 
     if project:
         client = sm.SecretManagerServiceClient()
-        settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
+        settings_name = os.environ.get("SETTINGS_NAME", "alumni_django_settings")
         name = f"projects/{project}/secrets/{settings_name}/versions/latest"
         payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
 

@@ -1,5 +1,5 @@
 resource google_storage_bucket media_bucket {
-  name = "${var.project}-media"
+  name = "${var.project}-alumni-media"
 }
 
 resource google_storage_bucket_access_control media_bucket_public_rule {

@@ -7,7 +7,7 @@ module secret_django_settings {
   source  = "../secret"
   project = var.project
 
-  name        = "django_settings"
+  name        = "alumni_django_settings"
   secret_data = templatefile("${path.module}/env.tpl", 
     {
         database_url = var.database_url
@@ -24,7 +24,7 @@ module secret_superuser {
   source  = "../secret"
   project = var.project
 
-  name        = "SUPERUSER"
+  name        = "ALUMNI_SUPERUSER"
   secret_data = var.superuser
   accessors   = [local.cloudbuild_sa]
 }
@@ -38,7 +38,7 @@ module secret_superpass {
   source  = "../secret"
   project = var.project
 
-  name        = "SUPERPASS"
+  name        = "ALUMNI_SUPERPASS"
   secret_data = random_password.superpass.result
   accessors   = [local.cloudbuild_sa]
 }
