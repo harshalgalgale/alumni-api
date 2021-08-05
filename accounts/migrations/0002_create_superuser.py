@@ -1,11 +1,12 @@
 import os
 
 from django.db import migrations
+from django.contrib.auth import get_user_model
 
 import google.auth
 from google.cloud import secretmanager_v1 as sm
 
-from accounts.models import UserManager
+User = get_user_model()
 
 
 def access_secrets(secret_keys):
@@ -37,9 +38,9 @@ def createsuperuser(apps, schema_editor):
     print(f'{username} {email}')
 
     # Create a new user using acquired password
-    UserManager().create_superuser(username=username,
-                                   email=email,
-                                   password=password)
+    User.objects.create_superuser(username=username,
+                                  email=email,
+                                  password=password)
 
 
 class Migration(migrations.Migration):
