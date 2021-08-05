@@ -1,11 +1,18 @@
 from django.contrib import admin
+from django.contrib.auth import admin as auth_admin
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from .models import User
+from accounts.forms import UserChangeForm, UserCreationForm
+
+User = get_user_model()
 
 
-# Register your models here.
-class UserAdmin(admin.ModelAdmin):
+@admin.register(User)
+class UserAdmin(auth_admin.UserAdmin):
+
+    form = UserChangeForm
+    add_form = UserCreationForm
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (_("Personal info"), {"fields": ("name", "email")}),
@@ -13,6 +20,8 @@ class UserAdmin(admin.ModelAdmin):
             _("Permissions"),
             {
                 "fields": (
+                    "is_verified",
+                    "is_active",
                     "is_staff",
                     "is_superuser",
                     "groups",
@@ -24,6 +33,3 @@ class UserAdmin(admin.ModelAdmin):
     )
     list_display = ["username", "name", "is_superuser", "last_login"]
     search_fields = ["name", "username", "email"]
-
-
-admin.site.register(User, UserAdmin)
