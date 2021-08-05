@@ -25,7 +25,7 @@ def access_secrets(secret_keys):
 
 def createsuperuser(apps, schema_editor):
     settings = ["ALUMNI_SUPERUSER", "ALUMNI_SUPERPASS"]
-    if not all (k in os.environ.keys() for k in set(settings)):
+    if not all(k in os.environ.keys() for k in set(settings)):
         secrets = access_secrets(settings)
         username = secrets["ALUMNI_SUPERUSER"]
         password = secrets["ALUMNI_SUPERPASS"]
@@ -34,15 +34,15 @@ def createsuperuser(apps, schema_editor):
         password = os.environ["ALUMNI_SUPERPASS"]
 
     email = username + '@alumni.com'
+    print(f'{username} {email}')
 
     # Create a new user using acquired password
     UserManager().create_superuser(username=username,
-                                 email=email,
-                                 password=password)
+                                   email=email,
+                                   password=password)
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("accounts", "0001_initial"),
     ]
