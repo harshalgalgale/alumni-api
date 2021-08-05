@@ -1,6 +1,7 @@
 django
 djangorestframework
 djangorestframework-simplejwt
+django-extensions
 gunicorn
 django-environ
 psycopg2-binary
