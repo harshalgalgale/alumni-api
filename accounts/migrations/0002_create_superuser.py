@@ -36,7 +36,7 @@ def createsuperuser(apps, schema_editor):
     email = username + '@alumni.com'
 
     # Create a new user using acquired password
-    UserManager.create_superuser(username=username,
+    UserManager().create_superuser(username=username,
                                  email=email,
                                  password=password)
 
