@@ -3,6 +3,8 @@ djangorestframework
 djangorestframework-simplejwt
 django-extensions
 django-cors-headers
+drf-yasg
+pillow
 gunicorn
 django-environ
 psycopg2-binary
