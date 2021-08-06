@@ -101,20 +101,20 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS =[
     'rest_framework',
     'rest_framework.authtoken',
-    # 'corsheaders',
+    'corsheaders',
     # 'import_export',
-    # 'drf_yasg',
+    'drf_yasg',
     'django_extensions',
 ]
 
 PROJECT_APPS = [
     'accounts',
-    # 'core',
-    # 'students',
-    # 'members',
-    # 'article',
-    # 'committee',
-    # 'careers',
+    'core',
+    'students',
+    'members',
+    'article',
+    'committee',
+    'careers',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -230,4 +230,40 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+}
+
+# Settings for Swagger/OpenAPI
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': True,
+    # add Django Login and Django Logout buttons, CSRF token to swagger UI page
+    # 'LOGIN_URL': getattr(django.conf.settings, 'LOGIN_URL', None),  # URL for the login button
+    # 'LOGOUT_URL': getattr(django.conf.settings, 'LOGOUT_URL', None),  # URL for the logout button
+
+    # Swagger security definitions to include in the schema;
+    # see https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md#security-definitions-object
+    'SECURITY_DEFINITIONS': {
+        # 'basic': {
+        #     'type': 'basic'
+        # },
+        'JWTAuthentication': {
+            'description': 'Uses Bearer Authentication (also called token authentication). You must include an Authorization header when making requests to the API',
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        },
+    },
+
+    # url to an external Swagger validation service; defaults to 'http://online.swagger.io/validator/'
+    # set to None to disable the schema validation badge in the UI
+    'VALIDATOR_URL': '',
+
+    # swagger-ui configuration settings,
+    # see https://github.com/swagger-api/swagger-ui/blob/112bca906553a937ac67adc2e500bdeed96d067b/docs/usage/configuration.md#parameters
+    'OPERATIONS_SORTER': None,
+    'TAGS_SORTER': None,
+    'DOC_EXPANSION': 'list',
+    'DEEP_LINKING': False,
+    'SHOW_EXTENSIONS': True,
+    'DEFAULT_MODEL_RENDERING': 'model',
+    'DEFAULT_MODEL_DEPTH': 2,
 }
