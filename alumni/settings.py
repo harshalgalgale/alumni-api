@@ -67,7 +67,11 @@ else:
     # Assume localhost if no CURRENT_HOST
     HOSTS = ["localhost"]
 
-ALLOWED_HOSTS = ["127.0.0.1"] + HOSTS
+ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0"] + HOSTS
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:4200"
+]
 
 # Enable Django security precautions if *not* running locally
 if "localhost" not in ALLOWED_HOSTS:
@@ -118,6 +122,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
