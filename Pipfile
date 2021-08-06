@@ -19,6 +19,7 @@ bs4 = "*"
 psycopg2-binary = "*"
 google-cloud-secret-manager = "*"
 google-cloud-storage = "*"
+django-storages = "*"
 
 [dev-packages]
 
