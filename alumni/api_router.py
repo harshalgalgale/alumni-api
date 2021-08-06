@@ -7,7 +7,7 @@ urlpatterns = [
     path('core/', include('core.urls')),
     path('students/', include('students.urls')),
     path('members/', include('members.urls')),
-    # path('article/', include('article.urls')),
-    # path('committee/', include('committee.urls')),
-    # path('careers/', include('careers.urls')),
+    path('article/', include('article.urls')),
+    path('committee/', include('committee.urls')),
+    path('careers/', include('careers.urls')),
 ]
