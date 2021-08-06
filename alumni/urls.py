@@ -20,6 +20,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework_simplejwt import views as jwt_views
+from .views import index
 
 
 schema_view = get_schema_view(
@@ -50,7 +51,9 @@ urlpatterns = [
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_verify'),
 
-    # Auth routes
+    # API routes
     path('api/', include('alumni.api_router')),
 
+    # The home page
+    path('', index, name='home'),
 ]
