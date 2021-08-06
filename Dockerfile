@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR $APP_HOME
 COPY . .
 
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 CMD gunicorn --bind :$PORT --workers 1 --threads 8 alumni.wsgi:application
