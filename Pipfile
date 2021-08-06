@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+djangorestframework = "*"
+djangorestframework-simplejwt = "*"
+django-extensions = "*"
+pillow = "*"
+django-environ = "*"
+django-cors-headers = "*"
+drf-yasg = "*"
+gunicorn = "*"
+requests = "*"
+pyyaml = "*"
+bs4 = "*"
+psycopg2-binary = "*"
+google-cloud-secret-manager = "*"
+google-cloud-storage = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
