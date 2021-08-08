@@ -7,7 +7,7 @@ router = routers.DefaultRouter()
 router.register('', StudentViewSet)
 
 urlpatterns = [
-    url(r'^upload/students/', BatchUploadStudentsView.as_view(),
+    url(r'^upload/', BatchUploadStudentsView.as_view(),
         name='batch_upload_students'),
 
 ]
