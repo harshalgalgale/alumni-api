@@ -35,7 +35,6 @@ def createsuperuser(apps, schema_editor):
         password = os.environ["ALUMNI_SUPERPASS"]
 
     email = username + '@alumni.com'
-    print(f'{username} {email}')
 
     # Create a new user using acquired password
     User.objects.create_superuser(username=username,

@@ -1,18 +1,21 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from core.models import AbstractAddress
+from core.models import AbstractAddress, get_sentinel_user
 from members.models import PersonalProfile
 from students.models import DEGREE
 
 User = get_user_model()
+
+
 # Create your models here.
 
 
 class Company(models.Model):
     name = models.CharField(max_length=200)
-    logo =models.FileField(blank=True, null=True)
+    logo = models.FileField(blank=True, null=True)
     url = models.URLField(help_text='Company URL', blank=True)
+
     class Meta:
         ordering = ['name']
 
@@ -22,6 +25,7 @@ class Company(models.Model):
 
 class CompanyAddress(AbstractAddress):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+
     class Meta:
         ordering = ['company__name', 'country']
 
@@ -46,7 +50,7 @@ class JobAdvert(models.Model):
     max_salary = models.IntegerField(default=0)
     employment_type = models.CharField(choices=EMPLOYMENT_TYPE, max_length=10)
     last_date = models.DateField()
-    owner = models.ForeignKey(PersonalProfile, on_delete=models.CASCADE)
+    owner = models.ForeignKey(PersonalProfile, on_delete=models.SET(get_sentinel_user))
     view_count = models.IntegerField(default=0)
 
     class Meta:
