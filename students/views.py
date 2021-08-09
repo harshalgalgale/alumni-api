@@ -1,7 +1,10 @@
 import logging
+import string
 from datetime import datetime
+import random
 
 import pandas as pd
+from django.contrib.auth import get_user_model
 
 from rest_framework import permissions
 from rest_framework.generics import GenericAPIView
@@ -9,8 +12,16 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from members.models import PersonalProfile
 from students.models import Student
 from students.serializers import StudentSerializer
+
+User = get_user_model()
+
+
+def generate_random_password():
+    chars = string.ascii_letters + string.digits + string.punctuation
+    return ''.join((random.choice(chars)) for x in range(20))
 
 
 def process_students_data_file(full_file_path):
@@ -42,7 +53,26 @@ def process_students_data_file(full_file_path):
             'pass_year': pass_year,
             'gender': gender[0]
         }
-        Student.objects.get_or_create(**student)
+        student = Student.objects.create(**student)
+        if email:
+            username = f'{first_name}{last_name}'
+            user = User.objects.create_user(username=username,
+                                            email=email,
+                                            password=generate_random_password())
+            user.name = f'{first_name} {last_name}'
+            user.save()
+
+            member = {
+                'user': user,
+                'first_name': first_name,
+                'middle_name': middle_name,
+                'last_name': last_name,
+                'gender': gender[0],
+                'student': student,
+                'birth_date': student.birth_date,
+                'phone': contact
+            }
+            member = PersonalProfile.objects.create(**member)
 
 
 class StudentViewSet(ModelViewSet):
