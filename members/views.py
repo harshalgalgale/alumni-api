@@ -1,5 +1,5 @@
 from django.http import Http404
-from rest_framework import status
+from rest_framework import status, generics, filters
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -134,3 +134,10 @@ class UserProfileView(RetrieveAPIView):
                 'error': str(e)
                 }
         return Response(response, status=status_code)
+
+
+class MembersSearchView(generics.ListAPIView):
+    queryset = PersonalProfile.objects.all()
+    serializer_class = PersonalProfileSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['first_name', 'last_name']

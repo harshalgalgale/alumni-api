@@ -75,7 +75,7 @@ class PersonalProfileAdmin(admin.ModelAdmin):
         'first_name',
         'last_name',
         'user__email',
-        'mobile',
+        'phone'
     )
     raw_id_fields = ['user', 'student']
     save_as = True
