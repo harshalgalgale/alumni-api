@@ -6,12 +6,14 @@ from article.models import Bulletin, Album, AlbumImage
 
 @admin.register(Bulletin)
 class BulletinAdmin(admin.ModelAdmin):
-    pass
+    raw_id_fields = ['author']
+    save_as = True
 
 
 @admin.register(Album)
 class AlbumAdmin(admin.ModelAdmin):
-    pass
+    raw_id_fields = ['author']
+    save_as = True
 
 
 @admin.register(AlbumImage)
