@@ -33,7 +33,7 @@ jobs:
         # Enter some useful defaults for other environment variables
         echo -en "SECRET_KEY=asdfasdfasdf\nSUPERUSER=admin\nSUPERPASS=admin\nDBEUG=True" >> .env
     - name: Install dependencies
-      run: pip install -r requirements.txt
+      run: pip install --upgrade pip && pip install pipenv && pipenv install --system --deploy
 
     - name: Run tests
       run: python manage.py test --exclude external
