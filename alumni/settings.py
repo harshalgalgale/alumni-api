@@ -72,7 +72,9 @@ else:
 ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0"] + HOSTS
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:4200"
+    "http://localhost:4200",
+    "https://agroneers-rahuri.web.app",
+    "https://agroneersrahuri.org",
 ]
 
 # Enable Django security precautions if *not* running locally
