@@ -280,7 +280,7 @@ ADMINS = [("admin", "admin@alumni.com"), ]
 # JWT SETTINGS
 # =============================================================================
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=int(os.environ.get('ACCESS_TOKEN_LIFETIME', '60'))),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=int(os.environ.get('ACCESS_TOKEN_LIFETIME', '1440'))),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=int(os.environ.get('REFRESH_TOKEN_LIFETIME', 1))),
     # JsonToken instead of Bearer So that it works with current Oauth2.
     # 'AUTH_HEADER_TYPES': ('JsonToken',),
