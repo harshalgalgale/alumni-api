@@ -11,6 +11,18 @@ class PersonalProfileSerializer(ModelSerializer):
         depth = 0
 
 
+class SocialProfileSerializer(ModelSerializer):
+    class Meta:
+        model = SocialProfile
+        fields = '__all__'
+
+
+class WorkProfileSerializer(ModelSerializer):
+    class Meta:
+        model = WorkProfile
+        fields = '__all__'
+
+
 class PersonalProfileListSerializer(ModelSerializer):
     class Meta:
         model = PersonalProfile
@@ -19,14 +31,13 @@ class PersonalProfileListSerializer(ModelSerializer):
     image = serializers.CharField(source='avatar')
 
 
-class SocialProfileSerializer(ModelSerializer):
+class PersonalProfileListSerializer(ModelSerializer):
+    # work_profile = WorkProfileSerializer(many=True)
     class Meta:
-        model = SocialProfile
+        model = PersonalProfile
+        fields = ['id', 'name', 'image', 'graduation']
 
-
-class WorkProfileSerializer(ModelSerializer):
-    class Meta:
-        model = WorkProfile
+    image = serializers.CharField(source='avatar')
 
 
 class MyProfile(ModelSerializer):

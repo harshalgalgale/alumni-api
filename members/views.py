@@ -146,11 +146,11 @@ class MembersSummaryView(generics.ListAPIView):
             'success': 'true',
             'status code': status_code,
             'message': 'Summary fetched successfully',
-            'data': {
-                'total': total,
-                'graduates': graduates,
-                'post_graduates': post_graduates,
-                'phds': phds,
-            },
+            'data': [
+                {'id': 1, 'title': 'Members', 'count': total, 'image': 'assets/images/illustrator/Asset190.svg'},
+                {'id': 2, 'title': 'Graduates', 'count': graduates, 'image': 'assets/images/illustrator/Asset189.svg'},
+                {'id': 3, 'title': 'Post Graduates', 'count': post_graduates, 'image': 'assets/images/illustrator/Asset192.svg'},
+                {'id': 4, 'title': 'PhDs', 'count': phds, 'image': 'assets/images/illustrator/Asset187.svg'},
+            ]
         }
         return Response(response, status=status_code)
