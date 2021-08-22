@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from members.models import PersonalProfile, WorkProfile, SocialProfile, PermanentAddress
-from members.serializers import PersonalProfileSerializer, MyProfile
+from members.serializers import PersonalProfileSerializer, MyProfile, PersonalProfileListSerializer
 
 
 class PersonalProfileViewSet(ModelViewSet):
@@ -20,7 +20,8 @@ class MembersListView(APIView):
 
     def get(self, request, format=None):
         queryset = PersonalProfile.objects.all()
-        serializer = PersonalProfileSerializer(queryset, many=True)
+        # serializer = PersonalProfileSerializer(queryset, many=True)
+        serializer = PersonalProfileListSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
@@ -137,7 +138,7 @@ class UserProfileView(RetrieveAPIView):
 
 
 class MembersSearchView(generics.ListAPIView):
-    queryset = PersonalProfile.objects.all()
-    serializer_class = PersonalProfileSerializer
+    queryset = PersonalProfile.objects.all().select_related('student')
+    serializer_class = PersonalProfileListSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['first_name', 'last_name']

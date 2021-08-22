@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 # Create your models here.
 from core.models import AbstractAddress, SubSector, Skills
 from students.models import Student, GENDER
+
 User = get_user_model()
 
 
@@ -30,6 +31,10 @@ class PersonalProfile(models.Model):
     @property
     def name(self):
         return f'{self.first_name} {self.last_name}'
+
+    @property
+    def graduation(self):
+        return f'{self.student.degree.upper()} ({self.student.pass_year})'
 
 
 class WorkProfile(AbstractAddress):

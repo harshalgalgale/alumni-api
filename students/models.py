@@ -47,7 +47,7 @@ class Student(models.Model):
     class Meta:
         verbose_name = 'Registered Student'
         verbose_name_plural = 'Registered Students'
-        ordering = ['reg_no', 'last_name', 'first_name', 'middle_name', 'birth_date']
+        ordering = ['reg_year', 'pass_year', 'reg_no', 'last_name', 'first_name', 'middle_name', 'birth_date']
         unique_together = ['reg_no', 'degree', 'reg_year']
 
     def __str__(self):

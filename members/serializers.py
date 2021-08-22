@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from members.models import PersonalProfile, SocialProfile, WorkProfile
@@ -8,6 +9,14 @@ class PersonalProfileSerializer(ModelSerializer):
         model = PersonalProfile
         fields = '__all__'
         depth = 0
+
+
+class PersonalProfileListSerializer(ModelSerializer):
+    class Meta:
+        model = PersonalProfile
+        fields = ['id', 'name', 'image', 'graduation']
+
+    image = serializers.CharField(source='avatar')
 
 
 class SocialProfileSerializer(ModelSerializer):
