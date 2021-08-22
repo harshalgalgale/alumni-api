@@ -1,5 +1,7 @@
+import logging
+
 from django.contrib.auth import get_user_model
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.utils.text import slugify
@@ -39,11 +41,14 @@ class ResetPassword(APIView):
 
     def post(self, request):
         data = request.data
-        data['username'] = slugify(data['email'])
-        serializer = ResetPasswordSerializer(data=data)
-        alldatas = {}
-        if serializer.is_valid(raise_exception=True):
-            mname = serializer.save()
-            alldatas['data'] = 'Successful password reset.'
-            return Response(alldatas, status=201)
-        return Response('Failed to reset password', status=404)
+        email = data['email']
+        password = data['password']
+        logging.info(msg=f'Reset Password Request Posted for user with email: {email}')
+        try:
+            user = get_object_or_404(User.objects, email=email)
+            user.set_password(password)
+            user.save()
+            return Response({'data': 'Successful password reset.'}, status=201)
+        except User.DoesNotExist:
+            return Response({'data': f'User with email {email} not found.'}, status=404)
+
