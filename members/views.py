@@ -25,6 +25,67 @@ class MembersListView(APIView):
         return Response(serializer.data)
 
 
+def get_profile_details(user_profile):
+    user_address = PermanentAddress.objects.filter(personal_profile=user_profile)
+    if user_address:
+        user_address_dict = user_address.last().address
+    else:
+        user_address_dict = {}
+    work_profiles = WorkProfile.objects.filter(personal_profile=user_profile)
+    if work_profiles:
+        work_profile = work_profiles.last()
+        work_profile_dict = dict(
+            sector={'id': work_profile.sector.id, 'name': work_profile.sector.name},
+            organisation=work_profile.organisation,
+            position=work_profile.position,
+            role=work_profile.role,
+            url=work_profile.url,
+            address=work_profile.address
+        )
+    else:
+        work_profile_dict = {}
+    social_profile = SocialProfile.objects.filter(personal_profile=user_profile,
+                                                  social_media='linkedin').last()
+    skills = ProfessionalSkills.objects.filter(personal_profile=user_profile)
+    if social_profile:
+        social_profile_url = social_profile.url
+    else:
+        social_profile_url = None
+    if user_profile.avatar:
+        user_image = user_profile.avatar.url
+    else:
+        user_image = None
+    status_code = status.HTTP_200_OK
+    response = {
+        'success': 'true',
+        'status code': status_code,
+        'message': 'User profile fetched successfully',
+        'data': {
+            'id': user_profile.id,
+            'name': user_profile.name,
+            'personal_profile': {
+                'first_name': user_profile.first_name,
+                'middle_name': user_profile.middle_name,
+                'last_name': user_profile.last_name,
+                'birth_date': user_profile.birth_date.isoformat(),
+                'phone': user_profile.phone,
+                'email': user_profile.user.email,
+                'gender': user_profile.gender,
+                'avatar': user_image,
+                'bio': user_profile.bio,
+                'address': user_address_dict
+            },
+            'work_profile': work_profile_dict,
+            'linkedin': social_profile_url,
+            'skills': [
+                {'id': skill.id, 'name': skill.name} for skill in skills
+            ],
+            'blogs': []
+        },
+    }
+    return response, status_code
+
+
 class MembersDetailView(APIView):
     """
     Retrieve, update or delete a snippet instance.
@@ -37,68 +98,8 @@ class MembersDetailView(APIView):
 
     def get(self, request, pk, format=None):
         user_profile = self.get_object(pk)
-        response, status_code = self.get_profile_details(user_profile)
+        response, status_code = get_profile_details(user_profile)
         return Response(response, status=status_code)
-
-    def get_profile_details(self, user_profile):
-        user_address = PermanentAddress.objects.filter(personal_profile=user_profile)
-        if user_address:
-            user_address_dict = user_address.last().address
-        else:
-            user_address_dict = {}
-        work_profiles = WorkProfile.objects.filter(personal_profile=user_profile)
-        if work_profiles:
-            work_profile = work_profiles.last()
-            work_profile_dict = dict(
-                sector={'id': work_profile.sector.id, 'name': work_profile.sector.name},
-                organisation=work_profile.organisation,
-                position=work_profile.position,
-                role=work_profile.role,
-                url=work_profile.url,
-                address=work_profile.address
-            )
-        else:
-            work_profile_dict = {}
-        social_profile = SocialProfile.objects.filter(personal_profile=user_profile,
-                                                      social_media='linkedin').last()
-        skills = ProfessionalSkills.objects.filter(personal_profile=user_profile)
-        if social_profile:
-            social_profile_url = social_profile.url
-        else:
-            social_profile_url = None
-        if user_profile.avatar:
-            user_image = user_profile.avatar.url
-        else:
-            user_image = None
-        status_code = status.HTTP_200_OK
-        response = {
-            'success': 'true',
-            'status code': status_code,
-            'message': 'User profile fetched successfully',
-            'data': {
-                'id': user_profile.id,
-                'name': user_profile.name,
-                'personal_profile': {
-                    'first_name': user_profile.first_name,
-                    'middle_name': user_profile.middle_name,
-                    'last_name': user_profile.last_name,
-                    'birth_date': user_profile.birth_date.isoformat(),
-                    'phone': user_profile.phone,
-                    'email': user_profile.user.email,
-                    'gender': user_profile.gender,
-                    'avatar': user_image,
-                    'bio': user_profile.bio,
-                    'address': user_address_dict
-                },
-                'work_profile': work_profile_dict,
-                'linkedin': social_profile_url,
-                'skills': [
-                    {'id': skill.id, 'name': skill.name} for skill in skills
-                ],
-                'blogs': []
-            },
-        }
-        return response, status_code
 
     def put(self, request, pk, format=None):
         member = self.get_object(pk)
@@ -121,7 +122,7 @@ class UserProfileView(RetrieveAPIView):
 
     def get(self, request):
         user_profile = PersonalProfile.objects.get(user=request.user)
-        response, status_code = self.get_profile_details(user_profile)
+        response, status_code = get_profile_details(user_profile)
         return Response(response, status=status_code)
 
 
