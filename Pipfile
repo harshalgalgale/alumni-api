@@ -21,6 +21,7 @@ google-cloud-secret-manager = "*"
 google-cloud-storage = "*"
 django-storages = "*"
 pandas = "*"
+ipython = "*"
 
 [dev-packages]
 
