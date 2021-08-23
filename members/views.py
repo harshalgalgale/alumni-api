@@ -134,6 +134,7 @@ class MembersSearchView(generics.ListAPIView):
 
 
 class MembersSummaryView(generics.ListAPIView):
+    permission_classes = (AllowAny,)
 
     def get(self, request):
         queryset = PersonalProfile.objects.all().select_related('student')
