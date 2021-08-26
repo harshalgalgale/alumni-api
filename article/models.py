@@ -18,6 +18,7 @@ class AbstractArticle(models.Model):
 
 class Bulletin(AbstractArticle):
     file = models.FileField(blank=False, null=False)
+    aws_file_path = models.URLField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'Bulletin'
