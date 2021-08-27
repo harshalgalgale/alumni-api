@@ -107,7 +107,7 @@ def get_profile_details(user_profile):
             'work_profile': work_profile_dict,
             'linkedin': social_profile_url,
             'skills': [
-                {'id': skill.id, 'name': skill.skill.name} for skill in skills
+                {'id': skill.id, 'skill_id': skill.skill.id, 'name': skill.skill.name} for skill in skills
             ],
             'blogs': []
         },
