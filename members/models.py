@@ -9,6 +9,13 @@ User = get_user_model()
 
 
 class PersonalProfile(models.Model):
+    TITLE = [
+        ('mr', 'Mr'),
+        ('miss', 'Miss'),
+        ('mrs', 'Mrs'),
+        ('dr', 'Dr'),
+    ]
+    title = models.CharField(help_text='Title', choices=TITLE, max_length=10, null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=255)
     middle_name = models.CharField(max_length=255, null=True, blank=True)
