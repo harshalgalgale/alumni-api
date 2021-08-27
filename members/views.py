@@ -1,5 +1,6 @@
 from django.http import Http404
 from rest_framework import status, generics, filters
+from rest_framework.decorators import api_view
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -7,7 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from members.models import PersonalProfile, WorkProfile, SocialProfile, PermanentAddress, ProfessionalSkills
-from members.serializers import PersonalProfileSerializer, MyProfile, PersonalProfileListSerializer
+from members.serializers import PersonalProfileSerializer, MyProfile, PersonalProfileListSerializer, \
+    WorkProfileSerializer, SocialProfileSerializer
 
 
 class PersonalProfileViewSet(ModelViewSet):
@@ -16,6 +18,24 @@ class PersonalProfileViewSet(ModelViewSet):
     permission_classes = (AllowAny,)
 
 
+class WorkProfileViewSet(ModelViewSet):
+    queryset = WorkProfile.objects.all()
+    serializer_class = WorkProfileSerializer
+    permission_classes = (AllowAny,)
+
+
+class SocialProfileViewSet(ModelViewSet):
+    queryset = SocialProfile.objects.all()
+    serializer_class = SocialProfileSerializer
+    permission_classes = (AllowAny,)
+
+
+# class PermanentAddressViewSet(ModelViewSet):
+#     queryset = PermanentAddress.objects.all()
+#     serializer_class = PermanentAddressSerializer
+#     permission_classes = (AllowAny,)
+#
+#
 class MembersListView(APIView):
 
     def get(self, request, format=None):
@@ -155,3 +175,67 @@ class MembersSummaryView(generics.ListAPIView):
             ]
         }
         return Response(response, status=status_code)
+
+#
+# def update_work_profile(profile_id, data):
+#     work_profile = {
+#         "personal_profile": data['profile_id'],
+#         "organisation": data['organisation'],
+#         "sector": data['sector'],
+#         "position": data['position'],
+#         "role": data['role'],
+#         "url": data['url'],
+#         "address_line": data['companyAddressLine'],
+#         "post_code": data['companyPostCode'],
+#         "plus_code": data['companyPlusCode'],
+#         "street_name": data['companyStreetName'],
+#         "town_city": data['companyCity'],
+#         "district": data['companyDistrict'],
+#         "state": data['companyState'],
+#         "country": data['companyCountry'],
+#     }
+#     work_profile, _ = WorkProfile.objects.update_or_create(**work_profile)
+#     return work_profile
+#
+#
+# def update_social_profile(profile_id, data):
+#     profile_data = {
+#         "personal_profile": data['profile_id'],
+#         "social_media": 'linkedin',
+#         "url":data ['url']
+#     }
+#     social_profile, _ = SocialProfile.objects.update_or_create(**profile_data)
+#     return social_profile
+#
+#
+# @api_view(['PUT'])
+# def update_work(request):
+#     work_profile_id = request.GET.get('id')
+#     data = request.data
+#     result = update_work_profile(work_profile_id, data)
+#     return Response(result, status=200)
+#
+#
+# @api_view(['PUT'])
+# def update_social(request):
+#     profile_id = request.GET.get('id')
+#     data = request.data
+#     result = update_social_profile(profile_id, data)
+#     return Response(result, status=200)
+#
+#
+# @api_view(['PUT'])
+# def update_personal(request):
+#     profile_id = request.GET.get('id')
+#     data = request.data
+#     result = update_social_profile(profile_id, data)
+#     return Response(result, status=200)
+#
+#
+# @api_view(['PUT'])
+# def update_address(request):
+#     profile_id = request.GET.get('id')
+#     data = request.data
+#     result = update_social_profile(profile_id, data)
+#     return Response(result, status=200)
+#
