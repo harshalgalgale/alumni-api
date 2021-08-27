@@ -52,8 +52,11 @@ class SocialProfileInlineAdmin(admin.TabularInline):
 @admin.register(PersonalProfile)
 class PersonalProfileAdmin(admin.ModelAdmin):
     fieldsets = (
+        ('Linking user and student', {
+            'fields': ('user', 'student')
+        }),
         ('Personal Information', {
-            'fields': ('user', 'student', 'title', ('first_name', 'middle_name', 'last_name'), ('gender', 'birth_date', 'avatar'),)
+            'fields': ('title', ('first_name', 'middle_name', 'last_name'), ('gender', 'birth_date', 'avatar'),)
         }),
         ('Contact Information', {
             'fields': (('phone', ),),
