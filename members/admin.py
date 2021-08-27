@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from members.models import PersonalProfile, WorkProfile, SocialProfile, PermanentAddress
+from members.models import PersonalProfile, WorkProfile, SocialProfile, PermanentAddress, ProfessionalSkills
 
 
 class PermanentAddressInlineAdmin(admin.StackedInline):
@@ -49,6 +49,21 @@ class SocialProfileInlineAdmin(admin.TabularInline):
         ).select_related('personal_profile')
 
 
+class ProfessionalSkillsInlineAdmin(admin.TabularInline):
+    model = ProfessionalSkills
+    extra = 0
+
+    def get_queryset(self, request):
+        """
+        Fetches related models to avoid extra queries
+        """
+        return super(
+            ProfessionalSkillsInlineAdmin, self
+        ).get_queryset(
+            request
+        ).select_related('personal_profile')
+
+
 @admin.register(PersonalProfile)
 class PersonalProfileAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -68,6 +83,7 @@ class PersonalProfileAdmin(admin.ModelAdmin):
     inlines = (
         PermanentAddressInlineAdmin,
         WorkProfileInlineAdmin,
+        ProfessionalSkillsInlineAdmin,
         SocialProfileInlineAdmin,
     )
     list_display = ['first_name', 'last_name', 'user', 'gender', 'birth_date', 'phone']
