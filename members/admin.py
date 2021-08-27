@@ -53,7 +53,7 @@ class SocialProfileInlineAdmin(admin.TabularInline):
 class PersonalProfileAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Personal Information', {
-            'fields': ('user', 'student', ('first_name', 'middle_name', 'last_name'), ('gender', 'birth_date', 'avatar'),)
+            'fields': ('user', 'student', 'title', ('first_name', 'middle_name', 'last_name'), ('gender', 'birth_date', 'avatar'),)
         }),
         ('Contact Information', {
             'fields': (('phone', ),),
