@@ -84,6 +84,7 @@ def get_profile_details(user_profile):
             'id': user_profile.id,
             'name': user_profile.name,
             'personal_profile': {
+                'title': user_profile.title,
                 'first_name': user_profile.first_name,
                 'middle_name': user_profile.middle_name,
                 'last_name': user_profile.last_name,
