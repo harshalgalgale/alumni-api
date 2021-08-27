@@ -35,9 +35,9 @@ class PersonalProfileListSerializer(ModelSerializer):
     # work_profile = WorkProfileSerializer(many=True)
     class Meta:
         model = PersonalProfile
-        fields = ['id', 'name', 'image', 'graduation']
+        fields = ['id', 'name', 'avatar', 'graduation']
 
-    image = serializers.CharField(source='avatar')
+    # image = serializers.CharField(source='avatar')
 
 
 class MyProfile(ModelSerializer):
