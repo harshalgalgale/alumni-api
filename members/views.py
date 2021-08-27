@@ -17,6 +17,7 @@ class ProfessionalSkillsViewset(ModelViewSet):
     serializer_class = ProfessionalSkillsSerializer
     permission_classes = (IsAuthenticated,)
 
+
 class PersonalProfileViewSet(ModelViewSet):
     queryset = PersonalProfile.objects.all()
     serializer_class = PersonalProfileSerializer
@@ -106,7 +107,7 @@ def get_profile_details(user_profile):
             'work_profile': work_profile_dict,
             'linkedin': social_profile_url,
             'skills': [
-                {'id': skill.id, 'name': skill.name} for skill in skills
+                {'id': skill.id, 'name': skill.skill} for skill in skills
             ],
             'blogs': []
         },
