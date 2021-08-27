@@ -1,7 +1,19 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from members.models import PersonalProfile, SocialProfile, WorkProfile
+from members.models import PersonalProfile, SocialProfile, WorkProfile, ProfessionalSkills, PermanentAddress
+
+
+class ProfessionalSkillsSerializer(ModelSerializer):
+    class Meta:
+        model = ProfessionalSkills
+        fields = '__all__'
+
+
+class PermanentAddressSerializer(ModelSerializer):
+    class Meta:
+        model = PermanentAddress
+        fields = '__all__'
 
 
 class PersonalProfileSerializer(ModelSerializer):

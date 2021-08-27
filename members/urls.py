@@ -3,7 +3,8 @@ from django.urls import path
 from rest_framework import routers
 
 from members.views import PersonalProfileViewSet, MembersListView, MembersDetailView, UserProfileView, \
-    MembersSearchView, MembersSummaryView, WorkProfileViewSet, SocialProfileViewSet
+    MembersSearchView, MembersSummaryView, WorkProfileViewSet, SocialProfileViewSet, PermanentAddressViewSet, \
+    ProfessionalSkillsViewset
 
 # , update_work, update_social, update_personal, update_address
 
@@ -11,7 +12,8 @@ router = routers.DefaultRouter()
 router.register('profile', PersonalProfileViewSet)
 router.register('profile-work', WorkProfileViewSet)
 router.register('profile-social', SocialProfileViewSet)
-# router.register('profile-address', PersonalProfileViewSet)
+router.register('profile-skills', ProfessionalSkillsViewset)
+router.register('profile-address', PermanentAddressViewSet)
 
 
 urlpatterns = [

@@ -9,33 +9,38 @@ from rest_framework.viewsets import ModelViewSet
 
 from members.models import PersonalProfile, WorkProfile, SocialProfile, PermanentAddress, ProfessionalSkills
 from members.serializers import PersonalProfileSerializer, MyProfile, PersonalProfileListSerializer, \
-    WorkProfileSerializer, SocialProfileSerializer
+    WorkProfileSerializer, SocialProfileSerializer, PermanentAddressSerializer, ProfessionalSkillsSerializer
 
+
+class ProfessionalSkillsViewset(ModelViewSet):
+    queryset = ProfessionalSkills.objects.all()
+    serializer_class = ProfessionalSkillsSerializer
+    permission_classes = (IsAuthenticated,)
 
 class PersonalProfileViewSet(ModelViewSet):
     queryset = PersonalProfile.objects.all()
     serializer_class = PersonalProfileSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
 
 class WorkProfileViewSet(ModelViewSet):
     queryset = WorkProfile.objects.all()
     serializer_class = WorkProfileSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
 
 class SocialProfileViewSet(ModelViewSet):
     queryset = SocialProfile.objects.all()
     serializer_class = SocialProfileSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
 
-# class PermanentAddressViewSet(ModelViewSet):
-#     queryset = PermanentAddress.objects.all()
-#     serializer_class = PermanentAddressSerializer
-#     permission_classes = (AllowAny,)
-#
-#
+class PermanentAddressViewSet(ModelViewSet):
+    queryset = PermanentAddress.objects.all()
+    serializer_class = PermanentAddressSerializer
+    permission_classes = (IsAuthenticated,)
+
+
 class MembersListView(APIView):
 
     def get(self, request, format=None):
@@ -55,7 +60,8 @@ def get_profile_details(user_profile):
     if work_profiles:
         work_profile = work_profiles.last()
         work_profile_dict = dict(
-            sector={'id': work_profile.sector.id, 'name': work_profile.sector.name},
+            id=work_profile.id,
+            sector=sector_dict(work_profile),
             organisation=work_profile.organisation,
             position=work_profile.position,
             role=work_profile.role,
@@ -84,6 +90,7 @@ def get_profile_details(user_profile):
             'id': user_profile.id,
             'name': user_profile.name,
             'personal_profile': {
+                'id': user_profile.id,
                 'title': user_profile.title,
                 'first_name': user_profile.first_name,
                 'middle_name': user_profile.middle_name,
@@ -105,6 +112,13 @@ def get_profile_details(user_profile):
         },
     }
     return response, status_code
+
+
+def sector_dict(work_profile):
+    return dict(
+        id=work_profile.sector.id,
+        name=work_profile.sector.name
+    )
 
 
 class MembersDetailView(APIView):
